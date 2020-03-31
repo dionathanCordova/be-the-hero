@@ -13,7 +13,11 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
     const [city, setCity] = useState('');
+    const [pass, setPass] = useState('');
     const [uf, setUf] = useState('');
+    const [submitOk, setSubmitOk] = useState(false);
+    const [bgError, setBgError] = useState(false);
+    const [passIncorrect, setPassIncorrect] = useState(false);
 
     const history = useHistory();
 
@@ -24,6 +28,7 @@ export default function Register() {
             name,
             email,
             whatsapp,
+            pass,
             city,
             uf
         };
@@ -31,10 +36,30 @@ export default function Register() {
         try {
             const response = await api.post('ongs', data);
 
-            alert(`Seu ID de acesso: ${response.data.id}`);
+            alert(`Seu cadastro foi efetuado com sucesso`);
             history.push('/');
         } catch (error) {
-            alert('Erro no cadastro, tente novamente.');
+            alert(`Erro no cadastro, tente novamente. - apresentou o seginte erro: ${error}` );
+        }
+    }
+
+    function confirmSenha(e) {
+        console.log(passIncorrect);
+        if(pass === e) {
+            setSubmitOk(true);
+            setPassIncorrect(false);
+            setBgError("#FFF");
+        }else{
+            setBgError("#E02041");
+            setSubmitOk(false);
+            setPassIncorrect(true);
+        }
+    }
+
+    function replaceWhiteSpace(val) {
+        let repWhats = val.replace(' ', '');
+        if(repWhats.length <= 11) {
+            setWhatsapp(repWhats);
         }
     }
 
@@ -48,7 +73,7 @@ export default function Register() {
 
                     <Link to="/" className="back-link">
                         <FiArrowLeft size={16} color="#E02041" />
-                        Não tenho cadastro
+                        Já possuo cadastro
                     </Link>
                 </section>
                 <form onSubmit={handleRegister}>
@@ -63,10 +88,27 @@ export default function Register() {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
+
+                    <input
+                        style={{borderColor: bgError}}
+                        placeholder={passIncorrect ? "verifique se a senha está correta" : "INFORME SUA SENHA"}
+                        type="password"
+                        value={pass}
+                        onChange={e => setPass(e.target.value)}
+                    />
+
+                    <input
+                        style={{borderColor: bgError}}
+                        placeholder={passIncorrect ? "verifique se a senha está correta" : "CONFIRMAR A SENHA"}
+                        type="password"
+                        onChange={e => confirmSenha(e.target.value)}
+                    />
+
                     <input
                         placeholder="WhatsApp"
                         value={whatsapp}
-                        onChange={e => setWhatsapp(e.target.value)}
+                        type="number"
+                        onChange={e => replaceWhiteSpace(e.target.value)}
                     />
 
                     <div className="input-group">
@@ -83,7 +125,7 @@ export default function Register() {
                         />
                     </div>
 
-                    <button className="button" type="submit">Cadastrar</button>
+                    <button className="button" type={submitOk ? "submit" : "button"}>Cadastrar</button>
                 </form>
             </div>
         </div>

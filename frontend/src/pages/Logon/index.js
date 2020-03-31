@@ -63,6 +63,7 @@ export default function Logon() {
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                     />
+                   
                     <input
                         style={{borderColor: bgError}}
                         placeholder="SENHA"
@@ -70,12 +71,14 @@ export default function Logon() {
                         value={pass}
                         onChange={e => setPass(e.target.value)}
                     />
+                   
                     <input
                         style={{borderColor: bgError}}
                         placeholder="CONFIRM A SENHA"
                         type="password"
                         onChange={e => confirmSenha(e.target.value)}
                     />
+
                     <button className="button" type={subOk ? 'submit' : 'button'} onClick={() => checkDone()}>Entrar</button>
 
                     <Link to="/register" className="back-link">

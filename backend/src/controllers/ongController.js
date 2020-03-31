@@ -2,7 +2,7 @@ const {generateUnicId} = require('../utils/generateUnicId');
 const connection = require('../database/connection');
 const cryto = require('crypto');
 const alg = 'aes-256-ctr';
-const pwd = 'hashpass';
+const pwd = 'hashpassTOHexadecimal';
 
 module.exports = {
     async index(req, res) {
