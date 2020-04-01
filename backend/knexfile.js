@@ -3,10 +3,13 @@
 module.exports = {
 
   development: {
-    client: 'sqlite3',
-    connection: {
-      filename: './src/database/db.sqlite'
-    },
+    client: 'mysql',
+    connection: {  
+      user: 'root',  
+      password: '',  
+      server: 'localhost',  
+      database: 'sabeTheOngs'  
+    },  
     migrations: {
       directory: './src/database/migrations'
     },

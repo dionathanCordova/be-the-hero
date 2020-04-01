@@ -10,35 +10,42 @@ import './styles.css';
 
 import logoImg from '../../assets/logo.svg';
 
-export default function NewIncident() {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [value, setValue] = useState('');
+export default function NewIncident(props) {
+    const idIncident = props.location.state.detail.id;
+    const [title, setTitle] = useState(props.location.state.detail.title);
+    const [description, setDescription] = useState(props.location.state.detail.description);
+    const [value, setValue] = useState(props.location.state.detail.value);
+    const [amountCollected, setAmountCollected] = useState(props.location.state.detail.amount_collected);
 
+    console.log(idIncident)
     const history = useHistory();
 
     const ongId = localStorage.getItem('ongId');
     
     function registerValue(valueChange) {
         let value = valueChange.replace(',', '.');
-        setValue(value);
+        setAmountCollected(value);
     }
 
-    async function handleNewIncident(e) {
+    async function handleUpdateIncident(e) {
         e.preventDefault();
 
         var data = {
+            id: idIncident,
             title,
+            value,
             description,
-            value
+            amount_collected: amountCollected
         }
 
         try {
-            const response = await api.post('incidents', data, {
+            const response = await api.put(`incidents/${idIncident}`, data, {
                 headers: {
                     Authorization: ongId
                 }
             });
+             
+            console.log(response);
 
             if(response.status === 200) {
                 history.push('/profile');
@@ -55,33 +62,46 @@ export default function NewIncident() {
             <div className="content">
                 <section>
                     <img src={logoImg} alt="Be The Hero" />
-                    <h1>Cadastrar novo caso</h1>
-                    <p>Descreva o caso detalhadamenteo para encontrar herói para resolver isso.</p>
+                    <h1>Alterar informações do seu caso</h1>
+                    <p>Descreva o caso detalhadamenteo para encontrar pessoas que ajudariam a resolver.</p>
 
                     <Link to="/profile" className="back-link">
                         <FiArrowLeft size={16} color="#E02041" />
                         Voltar para home
                     </Link>
                 </section>
-                <form onSubmit={handleNewIncident}>
+                <form onSubmit={handleUpdateIncident}>
+                    <label htmlFor="title">Título</label>
                     <input
                         placeholder="Título do caso"
                         value={title}
                         onChange={e => setTitle(e.target.value)}
-                    />
+                    /> 
+
+                    <label htmlFor="descricao">Descrição</label>
                     <textarea
                         placeholder="Descrição"
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                     />
+
+                    <label htmlFor="value">Valor</label>
                     <input
-                        type="number"
-                        placeholder="Valor em reais"
+                        disabled
+                        placeholder="Valor em reais ou quantidade"
                         value={value}
                         onChange={e => registerValue(e.target.value)}
                     />
 
-                    <button className="button" type="submit">Cadastrar</button>
+                    <label htmlFor="value">Valor arrecadado</label>
+                    <input
+                        type="number"
+                        placeholder="Valor em reais ou quantidade"
+                        value={amountCollected ? amountCollected : 0}
+                        onChange={e => registerValue(e.target.value)}
+                    />
+
+                    <button className="button" type="submit">Alterar</button>
                 </form>
             </div>
         </div>

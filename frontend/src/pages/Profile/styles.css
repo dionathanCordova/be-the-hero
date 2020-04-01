@@ -1,13 +1,20 @@
 .profile-container {
-    width: 100%;
+    /* width: 100%;
     max-width: 1180px;
     padding: 0 30px;
-    margin: 32px auto;
+    margin: 32px auto; */
 }
 
 .profile-container header {
     display: flex;
     align-items: center;
+    background-color: #FFF;
+    box-shadow: 0 0 1em #CCC;
+}
+
+.profile-container header img {
+    margin: 24px;
+    height: 64px;
 }
 
 .profile-container header span {
@@ -15,9 +22,6 @@
     margin-left: 24px;
 }
 
-.profile-container header img {
-    height: 64px;
-}
 
 .profile-container header a {
     width: 260px;
@@ -32,6 +36,7 @@
     border: 1px solid #dcdce6;
     background: transparent;
     margin-left: 16px;
+    margin-right: 16px;
     transition: border-color 0.2s;
 }
 
@@ -39,47 +44,59 @@
     border-color: #999;
 }
 
-.profile-container h1 {
+.profile-container article{
+    width: 100%;
+    max-width: 1180px;
+    padding: 0 30px;
+    margin: 32px auto;
+}
+
+.profile-container article h1 {
     margin-top: 80px;
     margin-bottom: 24px;
 }
 
-.profile-container ul {
+.profile-container article ul {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 24px;
     list-style: none;
 }
 
-.profile-container ul li {
+.profile-container article ul li {
     background: #FFF;
     padding: 24px;
     border-radius: 8px;
     position: relative;
+    box-shadow: 2px 2px 6px #CCC;
 }
 
-.profile-container ul li button {
+.profile-container article ul li .group-btn {
     position: absolute;
     right: 24px;
     top: 24px;
+}
+
+.profile-container article ul li .group-btn button{
+    margin-left: 10px;
     border: 0;
 }
 
-.profile-container ul li button:hover {
+.profile-container article ul li button:hover {
     opacity: 0.8;
 }
 
-.profile-container ul li strong {
+.profile-container article ul li strong {
     display: block;
     margin-bottom: 16px;
     color: #41414d;
 }
 
-.profile-container ul li p+strong {
+.profile-container article ul li p+strong {
     margin-top: 32px;
 }
 
-.profile-container ul li p {
+.profile-container article ul li p {
     color: #737380;
     line-height: 21px;
     font-size: 16px;

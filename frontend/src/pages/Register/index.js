@@ -58,6 +58,8 @@ export default function Register() {
 
     function replaceWhiteSpace(val) {
         let repWhats = val.replace(' ', '');
+        
+        repWhats = repWhats.replace('+', '');
         if(repWhats.length <= 11) {
             setWhatsapp(repWhats);
         }

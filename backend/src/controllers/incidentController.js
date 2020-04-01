@@ -39,6 +39,40 @@ module.exports = {
         return res.json({id});
     },
 
+    async getIncicent(req, res) {
+        const { id } = req.params;
+        const ong_id = req.headers.authorization;
+
+        const incidents = await connection('incidents')
+            .where('id', id)
+            .select('id', 'title', 'description', 'value', 'amount_collected')
+            .first();
+
+        if(incidents.ong_id == ong_id) {
+            return res.json(incidents);
+        }else{
+            return res.status(404).json({ error : 'Operation not permitted'});
+        }
+    },
+
+    async updateIncicent(req, res) {
+        const { id } = req.params;
+        const { title, description, amount_collected, value } = req.body;
+       
+        const incident = await connection('incidents')
+            .where('id', id)
+            .update({title, description, amount_collected})
+
+        if(amount_collected >= value) {
+            const incident = await connection('incidents')
+                .where('id', id)
+                .update({collection_done : 1})
+        }
+            
+        return res.json(incident);
+    },
+
+
     async delete(req, res) {
         const { id } = req.params;
         const ong_id = req.headers.authorization;
