@@ -24,8 +24,9 @@ export default function Logon() {
         try {
             const response = await api.post('session', { email, pass });
 
-            localStorage.setItem('ongId', response.data.id);
-            localStorage.setItem('ongName', response.data.name);
+            console.log(response);
+            localStorage.setItem('ongId', response.data.data.id);
+            localStorage.setItem('ongName', response.data.data.name);
 
             history.push('/profile');
         } catch (error) {
